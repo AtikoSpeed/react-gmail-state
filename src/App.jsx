@@ -17,6 +17,8 @@ function App() {
     initialEmails.filter((email) => email.read == true)
   );
 
+  const [readVisibilityToggle, setReadVisibilityToggle] = useState(false);
+
   function toggleStar(targetEmail) {
     const updatedEmails = currentEmails.map((currentEmail) =>
       currentEmail === targetEmail
@@ -62,8 +64,16 @@ function App() {
             <input
               id="hide-read"
               type="checkbox"
-              checked={false}
-              // onChange={() => {}}
+              checked={readVisibilityToggle}
+              onChange={() => {
+                readVisibilityToggle == false
+                  ? (setReadVisibilityToggle(true),
+                    setCurrentEmails(
+                      currentEmails.filter((email) => email.read == false)
+                    ))
+                  : (setReadVisibilityToggle(false),
+                    setCurrentEmails(currentEmails.concat(readEmails)));
+              }}
             />
           </li>
         </ul>
