@@ -5,16 +5,13 @@ import { useState } from "react";
 import "./styles/App.css";
 
 function App() {
-  // Use initialEmails for state
-  // console.log(initialEmails);
-
   const [currentEmails, setCurrentEmails] = useState(initialEmails);
   const [starredEmails, setStarredEmails] = useState(
-    initialEmails.filter((email) => email.starred == true)
+    currentEmails.filter((email) => email.starred == true)
   );
   // eslint-disable-next-line no-unused-vars
   const [readEmails, setReadEmails] = useState(
-    initialEmails.filter((email) => email.read == true)
+    currentEmails.filter((email) => email.read == !true)
   );
 
   const [readVisibilityToggle, setReadVisibilityToggle] = useState(false);
@@ -38,6 +35,8 @@ function App() {
     setCurrentEmails(updatedEmails);
     setReadEmails(updatedEmails.filter((email) => email.read == true));
   }
+
+  const emails = readVisibilityToggle == false ? currentEmails : readEmails;
 
   return (
     <div className="app">
@@ -67,19 +66,20 @@ function App() {
               checked={readVisibilityToggle}
               onChange={() => {
                 readVisibilityToggle == false
-                  ? (setReadVisibilityToggle(true),
-                    setCurrentEmails(
-                      currentEmails.filter((email) => email.read == false)
-                    ))
-                  : (setReadVisibilityToggle(false),
-                    setCurrentEmails(currentEmails.concat(readEmails)));
+                  ? setReadVisibilityToggle(true)
+                  : // ,
+                    //   setCurrentEmails(
+                    //     currentEmails.filter((email) => email.read == false)
+                    //   )
+                    setReadVisibilityToggle(false);
+                // ,setCurrentEmails(currentEmails.concat(readEmails))
               }}
             />
           </li>
         </ul>
       </nav>
       <main className="emails">
-        {currentEmails.map((email) => {
+        {emails.map((email) => {
           return (
             <li
               className={`email${email.read == true ? " read" : ""}`}
