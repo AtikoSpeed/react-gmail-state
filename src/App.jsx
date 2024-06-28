@@ -6,13 +6,7 @@ import "./styles/App.css";
 
 function App() {
   const [currentEmails, setCurrentEmails] = useState(initialEmails);
-  const [starredEmails, setStarredEmails] = useState(
-    currentEmails.filter((email) => email.starred == true)
-  );
   // eslint-disable-next-line no-unused-vars
-  const [readEmails, setReadEmails] = useState(
-    currentEmails.filter((email) => email.read == !true)
-  );
 
   const [readVisibilityToggle, setReadVisibilityToggle] = useState(false);
 
@@ -23,14 +17,22 @@ function App() {
         : currentEmail
     );
     setCurrentEmails(updatedEmails);
-    setStarredEmails(updatedEmails.filter((email) => email.starred == true));
   }
 
-  function toggleRead(targetEmail) {}
+  function toggleRead(targetEmail) {
+    const updatedEmails = currentEmails.map((currentEmail) =>
+      currentEmail === targetEmail
+        ? { ...currentEmail, read: !currentEmail.read }
+        : currentEmail
+    );
+    setCurrentEmails(updatedEmails);
+  }
 
-  const readEmails = email.read == true ? 
+  const starredEmails = currentEmails.filter((email) => email.starred == true);
 
-  const emails = readVisibilityToggle == false ? currentEmails : readEmails;
+  const unreadEmails = currentEmails.filter((email) => email.read == false);
+
+  const emails = readVisibilityToggle == false ? currentEmails : unreadEmails;
 
   return (
     <div className="app">
