@@ -9,6 +9,7 @@ function App() {
   // eslint-disable-next-line no-unused-vars
 
   const [readVisibilityToggle, setReadVisibilityToggle] = useState(false);
+  const [currentTab, setCurrentTab] = useState("inbox");
 
   function toggleStar(targetEmail) {
     const updatedEmails = currentEmails.map((currentEmail) =>
@@ -32,7 +33,16 @@ function App() {
 
   const unreadEmails = currentEmails.filter((email) => email.read == false);
 
-  const emails = readVisibilityToggle == false ? currentEmails : unreadEmails;
+  const starredAndUnread = starredEmails.filter((email) => email.read == false);
+
+  const emails =
+    currentTab == "starred"
+      ? readVisibilityToggle
+        ? starredAndUnread
+        : starredEmails
+      : readVisibilityToggle
+      ? unreadEmails
+      : currentEmails;
 
   return (
     <div className="app">
@@ -40,15 +50,19 @@ function App() {
       <nav className="left-menu">
         <ul className="inbox-list">
           <li
-            className="item active"
-            // onClick={() => {}}
+            className={`item${currentTab == "inbox" ? " active" : ""}`}
+            onClick={() => {
+              setCurrentTab("inbox");
+            }}
           >
             <span className="label">Inbox</span>
             <span className="count">{currentEmails.length}</span>
           </li>
           <li
-            className="item"
-            // onClick={() => {}}
+            className={`item${currentTab == "starred" ? " active" : ""}`}
+            onClick={() => {
+              setCurrentTab("starred");
+            }}
           >
             <span className="label">Starred</span>
             <span className="count">{starredEmails.length}</span>
