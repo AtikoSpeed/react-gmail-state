@@ -35,14 +35,14 @@ function App() {
 
   const starredAndUnread = starredEmails.filter((email) => email.read == false);
 
-  const emails =
-    currentTab == "starred"
-      ? readVisibilityToggle
-        ? starredAndUnread
-        : starredEmails
-      : readVisibilityToggle
-      ? unreadEmails
-      : currentEmails;
+  const emails = //set which emails are rendered
+    currentTab == "starred" //if we're on the starred tab
+      ? readVisibilityToggle //check if hide read is toggled
+        ? starredAndUnread //if it's toggled then only render starred and undread emails
+        : starredEmails //else render only starred emails
+      : readVisibilityToggle //if we're not on the starred tab check if hide unread is toggled
+      ? unreadEmails //if so, then show only unread emails
+      : currentEmails; //else show current emails
 
   return (
     <div className="app">
