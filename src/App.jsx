@@ -26,15 +26,9 @@ function App() {
     setStarredEmails(updatedEmails.filter((email) => email.starred == true));
   }
 
-  function toggleRead(targetEmail) {
-    const updatedEmails = currentEmails.map((currentEmail) =>
-      currentEmail === targetEmail
-        ? { ...currentEmail, read: !currentEmail.read }
-        : currentEmail
-    );
-    setCurrentEmails(updatedEmails);
-    setReadEmails(updatedEmails.filter((email) => email.read == true));
-  }
+  function toggleRead(targetEmail) {}
+
+  const readEmails = email.read == true ? 
 
   const emails = readVisibilityToggle == false ? currentEmails : readEmails;
 
@@ -67,12 +61,7 @@ function App() {
               onChange={() => {
                 readVisibilityToggle == false
                   ? setReadVisibilityToggle(true)
-                  : // ,
-                    //   setCurrentEmails(
-                    //     currentEmails.filter((email) => email.read == false)
-                    //   )
-                    setReadVisibilityToggle(false);
-                // ,setCurrentEmails(currentEmails.concat(readEmails))
+                  : setReadVisibilityToggle(false);
               }}
             />
           </li>
